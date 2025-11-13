@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>S1LENT WAS HERE – ASCII</title>
   <style>
     * {
@@ -10,85 +12,103 @@
       box-sizing: border-box;
     }
 
-    body {
-      background: radial-gradient(circle at top, #222 0%, #000 60%, #000 100%);
-      color: #00ff6a;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Courier New", monospace;
-      overflow: hidden;
-    }
+```
+body {
+  background: radial-gradient(circle at top, #222 0%, #000 60%, #000 100%);
+  color: #00ff6a;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+}
 
-    .crt {
-      position: relative;
-      padding: 20px 30px;
-      border: 2px solid #00ff6a55;
-      box-shadow:
-        0 0 30px #00ff6a33,
-        0 0 5px #00ff6a;
-      background: #020303;
-    }
+.crt {
+  position: relative;
+  padding: 2vw 3vw;
+  border: 0.2vw solid #00ff6a55;
+  box-shadow:
+    0 0 3vw #00ff6a33,
+    0 0 0.5vw #00ff6a;
+  background: #020303;
+  max-width: 95vw;
+  max-height: 95vh;
+  overflow: hidden;
+}
 
-    .crt::before {
-      content: "";
-      pointer-events: none;
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.1) 0px,
-        rgba(0, 0, 0, 0.1) 2px,
-        rgba(0, 0, 0, 0.3) 3px
-      );
-      mix-blend-mode: soft-light;
-      opacity: 0.4;
-    }
+.crt::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.3) 3px
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.4;
+}
 
-    .crt::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, #00ff6a11, transparent 60%);
-      pointer-events: none;
-    }
+.crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, #00ff6a11, transparent 60%);
+  pointer-events: none;
+}
 
-    #ascii {
-      position: relative;
-      z-index: 1;
-      white-space: pre;
-      font-size: 16px;
-      line-height: 1.1;
-      text-shadow:
-        0 0 5px #00ff6a,
-        0 0 10px #00ff6a;
-      animation: flicker 1.5s infinite alternate;
-    }
+#ascii {
+  position: relative;
+  z-index: 1;
+  white-space: pre;
+  font-size: clamp(8px, 1.5vw, 24px);
+  line-height: 1.1;
+  text-shadow:
+    0 0 0.5vw #00ff6a,
+    0 0 1vw #00ff6a;
+  animation: flicker 1.5s infinite alternate;
+}
 
-    .status {
-      position: absolute;
-      bottom: 6px;
-      right: 12px;
-      font-size: 10px;
-      color: #00ff6a88;
-      z-index: 2;
-    }
+.status {
+  position: absolute;
+  bottom: 0.5vw;
+  right: 1vw;
+  font-size: clamp(6px, 1vw, 14px);
+  color: #00ff6a88;
+  z-index: 2;
+}
 
-    @keyframes flicker {
-      0% { opacity: 0.9; }
-      5% { opacity: 0.7; }
-      10% { opacity: 0.95; }
-      20% { opacity: 0.8; }
-      30% { opacity: 1; }
-      40% { opacity: 0.75; }
-      50% { opacity: 0.9; }
-      60% { opacity: 1; }
-      70% { opacity: 0.85; }
-      80% { opacity: 1; }
-      90% { opacity: 0.9; }
-      100% { opacity: 1; }
-    }
+@keyframes flicker {
+  0% { opacity: 0.9; }
+  5% { opacity: 0.7; }
+  10% { opacity: 0.95; }
+  20% { opacity: 0.8; }
+  30% { opacity: 1; }
+  40% { opacity: 0.75; }
+  50% { opacity: 0.9; }
+  60% { opacity: 1; }
+  70% { opacity: 0.85; }
+  80% { opacity: 1; }
+  90% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  #ascii {
+    font-size: clamp(6px, 2vw, 12px);
+  }
+}
+
+@media (min-width: 1920px) {
+  #ascii {
+    font-size: clamp(16px, 1.2vw, 28px);
+  }
+}
+```
+
   </style>
 </head>
 <body>
@@ -162,16 +182,20 @@
       }
       
       let output = asciiArt;
-    
+      
+      // Pac-Man hinzufügen
       output += "\n\n         " + pacFrame;
       output += "\n            (i did nothing bad fyi)";
       
+      // Alle paar Frames ein "Glitch"-Effekt
       if (glitchCounter % 30 === 0) {
         const lines = output.split("\n");
         const glitched = lines.map((line, idx) => {
+          // Letzte 2 Zeilen (Pac-Man) nicht glitchen
           if (idx >= lines.length - 3) return line;
           
           if (Math.random() < 0.3) {
+            // Zufällig Zeichen ersetzen
             return line.split("").map(c => {
               if (c !== " " && Math.random() < 0.1) {
                 return ["█","▓","▒","░","#","@"][Math.floor(Math.random() * 6)];
@@ -183,7 +207,8 @@
         }).join("\n");
         
         asciiEl.textContent = glitched;
-      
+        
+        // Nach kurzer Zeit zurück zum Original
         setTimeout(() => {
           asciiEl.textContent = output;
         }, 100);
@@ -192,7 +217,9 @@
       }
     }
 
+    // alle 50ms ein neues Frame → Animation
     setInterval(frame, 50);
   </script>
+
 </body>
 </html>
