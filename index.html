@@ -26,14 +26,14 @@ body {
 
 .crt {
   position: relative;
-  padding: 2vw 3vw;
-  border: 0.2vw solid #00ff6a55;
+  padding: 3vw 4vw;
+  border: 0.3vw solid #00ff6a55;
   box-shadow:
-    0 0 3vw #00ff6a33,
-    0 0 0.5vw #00ff6a;
+    0 0 4vw #00ff6a33,
+    0 0 1vw #00ff6a;
   background: #020303;
-  max-width: 95vw;
-  max-height: 95vh;
+  max-width: 90vw;
+  max-height: 90vh;
   overflow: hidden;
 }
 
@@ -64,12 +64,13 @@ body {
   position: relative;
   z-index: 1;
   white-space: pre;
-  font-size: clamp(8px, 1.5vw, 24px);
-  line-height: 1.1;
+  font-size: clamp(12px, 2.5vw, 48px);
+  line-height: 1.2;
   text-shadow:
     0 0 0.5vw #00ff6a,
     0 0 1vw #00ff6a;
   animation: flicker 1.5s infinite alternate;
+  transform: scale(1.1);
 }
 
 .status {
@@ -98,13 +99,24 @@ body {
 
 @media (max-width: 768px) {
   #ascii {
-    font-size: clamp(6px, 2vw, 12px);
+    font-size: clamp(8px, 2.5vw, 16px);
   }
 }
 
 @media (min-width: 1920px) {
   #ascii {
-    font-size: clamp(16px, 1.2vw, 28px);
+    font-size: clamp(24px, 2.8vw, 56px);
+    transform: scale(1.2);
+  }
+  .crt {
+    padding: 4vw 5vw;
+  }
+}
+
+@media (min-width: 3840px) {
+  #ascii {
+    font-size: clamp(40px, 3vw, 72px);
+    transform: scale(1.3);
   }
 }
 ```
