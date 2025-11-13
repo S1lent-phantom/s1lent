@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>S1LENT WAS HERE – ASCII</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #222 0%, #000 60%, #000 100%);
+      color: #00ff6a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Courier New", monospace;
+      overflow: hidden;
+    }
+
+    .crt {
+      position: relative;
+      padding: 20px 30px;
+      border: 2px solid #00ff6a55;
+      box-shadow:
+        0 0 30px #00ff6a33,
+        0 0 5px #00ff6a;
+      background: #020303;
+    }
+
+    .crt::before {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.3) 3px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.4;
+    }
+
+    .crt::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, #00ff6a11, transparent 60%);
+      pointer-events: none;
+    }
+
+    #ascii {
+      position: relative;
+      z-index: 1;
+      white-space: pre;
+      font-size: 16px;
+      line-height: 1.1;
+      text-shadow:
+        0 0 5px #00ff6a,
+        0 0 10px #00ff6a;
+      animation: flicker 1.5s infinite alternate;
+    }
+
+    .status {
+      position: absolute;
+      bottom: 6px;
+      right: 12px;
+      font-size: 10px;
+      color: #00ff6a88;
+      z-index: 2;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.9; }
+      5% { opacity: 0.7; }
+      10% { opacity: 0.95; }
+      20% { opacity: 0.8; }
+      30% { opacity: 1; }
+      40% { opacity: 0.75; }
+      50% { opacity: 0.9; }
+      60% { opacity: 1; }
+      70% { opacity: 0.85; }
+      80% { opacity: 1; }
+      90% { opacity: 0.9; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="crt">
+    <pre id="ascii"></pre>
+    <div class="status">[ RUNNING ASCII DEMO // S1LENT WAS HERE ]</div>
+  </div>
+
+  <script>
+    const asciiArt = `
+   ███████╗ ██╗    ██╗     ███████╗███╗   ██╗████████╗
+   ██╔════╝███║    ██║     ██╔════╝████╗  ██║╚══██╔══╝
+   ███████╗╚██║    ██║     █████╗  ██╔██╗ ██║   ██║   
+   ╚════██║ ██║    ██║     ██╔══╝  ██║╚██╗██║   ██║   
+   ███████║ ██║    ███████╗███████╗██║ ╚████║   ██║   
+   ╚══════╝ ╚═╝    ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   
+                                                        
+           ║║║  W A S   H E R E  ║║║                  
+    `;
+
+    const pacmanFramesRight = [
+      "ᗧ · · · · · · · · · ",
+      "· ᗧ· · · · · · · · ",
+      "· · ᗤ· · · · · · · ",
+      "· · · ᗧ· · · · · · ",
+      "· · · · ᗤ· · · · · ",
+      "· · · · · ᗧ· · · · ",
+      "· · · · · · ᗤ· · · ",
+      "· · · · · · · ᗧ· · ",
+      "· · · · · · · · ᗤ· ",
+      "· · · · · · · · · ᗧ"
+    ];
+
+    const pacmanFramesLeft = [
+      "· · · · · · · · · ᗣ",
+      "· · · · · · · · ᗣ ·",
+      "· · · · · · · ᗤ· · ",
+      "· · · · · · ᗣ · · ·",
+      "· · · · · ᗤ· · · · ",
+      "· · · · ᗣ · · · · ·",
+      "· · · ᗤ· · · · · · ",
+      "· · ᗣ · · · · · · ·",
+      "· ᗤ· · · · · · · · ",
+      "ᗣ · · · · · · · · ·"
+    ];
+
+    const asciiEl = document.getElementById("ascii");
+    let glitchCounter = 0;
+    let animCounter = 0;
+    let goingRight = true;
+
+    function frame() {
+      glitchCounter++;
+      animCounter++;
+      
+      let pacFrame;
+      let frameIndex = Math.floor(animCounter / 3) % 10;
+      
+      if (goingRight) {
+        pacFrame = pacmanFramesRight[frameIndex];
+        if (frameIndex === 9) {
+          goingRight = false;
+          animCounter = 0;
+        }
+      } else {
+        pacFrame = pacmanFramesLeft[frameIndex];
+        if (frameIndex === 9) {
+          goingRight = true;
+          animCounter = 0;
+        }
+      }
+      
+      let output = asciiArt;
+    
+      output += "\n\n         " + pacFrame;
+      output += "\n            (i did nothing bad fyi)";
+      
+      if (glitchCounter % 30 === 0) {
+        const lines = output.split("\n");
+        const glitched = lines.map((line, idx) => {
+          if (idx >= lines.length - 3) return line;
+          
+          if (Math.random() < 0.3) {
+            return line.split("").map(c => {
+              if (c !== " " && Math.random() < 0.1) {
+                return ["█","▓","▒","░","#","@"][Math.floor(Math.random() * 6)];
+              }
+              return c;
+            }).join("");
+          }
+          return line;
+        }).join("\n");
+        
+        asciiEl.textContent = glitched;
+      
+        setTimeout(() => {
+          asciiEl.textContent = output;
+        }, 100);
+      } else {
+        asciiEl.textContent = output;
+      }
+    }
+
+    setInterval(frame, 50);
+  </script>
+</body>
+</html>
