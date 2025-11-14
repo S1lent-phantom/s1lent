@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S1LENT // WAS HERE</title>
+
     <style>
         * {
             margin: 0;
@@ -22,19 +23,25 @@
             color: #fff;
         }
 
+        /* TV SAFE AREA */
+        .tv-safe {
+            width: 100%;
+            height: 100%;
+            padding: 5vh 6vw; /* Abstand zu den Rändern */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .container {
             text-align: center;
             position: relative;
             z-index: 10;
-        }
-
-        .glitch-wrapper {
-            position: relative;
-            display: inline-block;
+            max-width: 90vw;
         }
 
         .ascii-logo {
-            font-size: 3.5vw;
+            font-size: clamp(18px, 3.5vw, 48px);
             font-weight: bold;
             line-height: 1.2;
             white-space: pre;
@@ -46,14 +53,13 @@
         }
 
         .was-here {
-            font-size: 6vw;
+            font-size: clamp(28px, 6vw, 80px);
             font-weight: bold;
             margin-top: 30px;
             background: linear-gradient(45deg, #ff0000, #ffffff, #ff0000);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             animation: gradientShift 2s ease infinite, glitchText 0.3s infinite;
             text-shadow:
                 3px 3px 0 rgba(255, 0, 0, 0.5),
@@ -69,36 +75,20 @@
         }
 
         .support-title {
-            font-size: 3vw;
+            font-size: clamp(18px, 3vw, 32px);
             color: #ff0000;
             margin-bottom: 20px;
             text-transform: uppercase;
             animation: flicker 0.2s infinite;
         }
 
-        .wallet-container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border: 2px solid #fff;
-            margin-top: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wallet-address {
-            font-size: 1.8vw;
+        .wallet-label {
+            font-size: clamp(16px, 2.5vw, 30px);
+            font-weight: bold;
             color: #00ff00;
-            word-break: break-all;
-            text-shadow: 0 0 5px #00ff00;
-            animation: textGlow 1s ease-in-out infinite;
-            cursor: pointer;
-        }
-
-        .copy-hint {
-            font-size: 1.5vw;
-            color: #888;
-            margin-top: 15px;
-            animation: pulse 2s infinite;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff00;
         }
 
         .qr-code {
@@ -111,9 +101,9 @@
         }
 
         .qr-code img {
-            display: block;
-            width: 200px;
+            width: clamp(150px, 25vw, 280px);
             height: auto;
+            display: block;
         }
 
         .ethics-section {
@@ -125,7 +115,7 @@
         }
 
         .ethics-title {
-            font-size: 1.8vw;
+            font-size: clamp(16px, 1.8vw, 28px);
             color: #00ff00;
             margin-bottom: 15px;
             text-transform: uppercase;
@@ -134,22 +124,20 @@
         }
 
         .ethics-text {
-            font-size: 1.2vw;
+            font-size: clamp(12px, 1.2vw, 20px);
             color: #fff;
             line-height: 1.6;
             text-align: center;
         }
 
-        .ethics-text .highlight {
-            color: #00ff00;
-            font-weight: bold;
-            text-shadow: 0 0 5px #00ff00;
-        }
-
-        .ethics-text .warning {
-            color: #ff0000;
-            font-weight: bold;
-            text-shadow: 0 0 5px #ff0000;
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
         }
 
         .scanlines {
@@ -167,143 +155,67 @@
             );
             pointer-events: none;
             z-index: 1;
-            animation: scanlineMove 10s linear infinite;
-        }
-
-        .vhs-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                repeating-linear-gradient(
-                    90deg,
-                    rgba(255, 0, 0, 0.03),
-                    rgba(0, 255, 0, 0.02),
-                    rgba(0, 0, 255, 0.03)
-                );
-            pointer-events: none;
-            z-index: 2;
-            opacity: 0.1;
-            animation: vhsDistort 0.3s infinite;
-        }
-
-        .glitch-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.1;
         }
 
         @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            25% { opacity: 0.8; }
-            50% { opacity: 1; }
-            75% { opacity: 0.9; }
+            0%,100%{opacity:1}
+            25%{opacity:.8}
+            50%{opacity:1}
+            75%{opacity:.9}
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
         }
 
         @keyframes glitchText {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
         }
 
         @keyframes borderGlitch {
-            0%, 100% { border-color: #ff0000; }
-            25% { border-color: #fff; }
-            50% { border-color: #ff0000; }
-            75% { border-color: rgba(255, 0, 0, 0.5); }
+            0%,100% { border-color:#ff0000 }
+            25% { border-color:#fff }
+            50% { border-color:#ff0000 }
+            75% { border-color:rgba(255,0,0,0.5) }
         }
 
         @keyframes borderGlitchGreen {
-            0%, 100% { border-color: #00ff00; }
-            25% { border-color: #fff; }
-            50% { border-color: #00ff00; }
-            75% { border-color: rgba(0, 255, 0, 0.5); }
-        }
-
-        @keyframes textGlow {
-            0%, 100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
-            50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        @keyframes scanlineMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(10px); }
-        }
-
-        @keyframes vhsDistort {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(2px); }
-            100% { transform: translateX(0); }
+            0%,100% { border-color:#00ff00 }
+            25% { border-color:#fff }
+            50% { border-color:#00ff00 }
+            75% { border-color:rgba(0,255,0,0.5) }
         }
 
         @keyframes qrPulse {
-            0%, 100% { box-shadow: 0 0 10px #ff0000; }
-            50% { box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
-        }
-
-        @media (max-width: 768px) {
-            .ascii-logo { font-size: 4vw; }
-            .was-here { font-size: 8vw; }
-            .support-title { font-size: 4vw; }
-            .wallet-address { font-size: 2.5vw; }
-            .copy-hint { font-size: 2.5vw; }
-            .ethics-title { font-size: 3vw; }
-            .ethics-text { font-size: 2vw; }
-            .qr-code { padding: 10px; }
+            0%,100% { box-shadow:0 0 10px #ff0000 }
+            50% { box-shadow:0 0 20px #ff0000, 0 0 30px #ff0000 }
         }
     </style>
 </head>
 <body>
-    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
-    <div class="scanlines"></div>
-    <div class="vhs-overlay"></div>
-    <div class="glitch-overlay" id="glitchOverlay"></div>
 
+<canvas class="matrix-bg" id="matrixCanvas"></canvas>
+<div class="scanlines"></div>
+
+<div class="tv-safe">
     <div class="container">
-        <div class="glitch-wrapper">
-            <pre class="ascii-logo" id="logo"></pre>
-        </div>
 
-        <div class="was-here" id="wasHere">WAS HERE</div>
+        <!-- ASCII LOGO (glitch animiert by JS) -->
+        <pre class="ascii-logo" id="logo"></pre>
+
+        <div class="was-here">WAS HERE</div>
 
         <div class="support-section">
             <div class="support-title">► SUPPORT GREY HEADS ◄</div>
-            <div class="wallet-container">
-                <div class="wallet-address" id="walletAddress">
-                    EMTppBwvfX8b9w3jh9o21qW9JidmXRJ53yFs2y6q78PB
-                </div>
-                <div class="copy-hint">[CLICK TO COPY WALLET ADDRESS]</div>
-            </div>
+            <div class="wallet-label">OUR SOLANA WALLET:</div>
+
             <div class="qr-code">
                 <img src="qr.png" alt="QR Code">
             </div>
@@ -312,18 +224,54 @@
         <div class="ethics-section">
             <div class="ethics-title">► ETHICAL DISCLOSURE ◄</div>
             <div class="ethics-text">
-                <span class="highlight">I DO NO HARM</span> •
-                I ONLY FIND <span class="highlight">VULNERABILITIES</span> •
-                <span class="warning">NO MALWARE • NO RANSOMWARE</span> •
-                <span class="highlight">PROTECT YOURSELF</span>
-                <br><span style="color: #666; font-size: 0.9em;">[ WHITE HAT • RESPONSIBLE DISCLOSURE • SECURITY RESEARCH ]</span>
+                <span style="color:#00ff00;font-weight:bold;">I DO NO HARM</span> •
+                I ONLY FIND <span style="color:#00ff00;font-weight:bold;">VULNERABILITIES</span> •
+                <span style="color:#ff0000;font-weight:bold;">NO MALWARE • NO RANSOMWARE</span> •
+                <span style="color:#00ff00;font-weight:bold;">PROTECT YOURSELF</span>
             </div>
         </div>
-    </div>
 
-    <script>
-        // ASCII Logo Frames
-        const logoFrames = [
+    </div>
+</div>
+
+<script>
+    /* MATRIX BACKGROUND */
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.onresize = resize;
+
+    const chars = '01ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
+    const fontSize = 14;
+    let columns = Math.floor(window.innerWidth / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#0F0';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 35);
+
+    /* LOGO GLITCH */
+    const frames = [
 `███████╗ ██╗██╗     ███████╗███╗   ██╗████████╗
 ██╔════╝███║██║     ██╔════╝████╗  ██║╚══██╔══╝
 ███████╗╚██║██║     █████╗  ██╔██╗ ██║   ██║  
@@ -336,126 +284,16 @@
 ╚════██║ ██║██║     ██╔══╝  ██║╚██╗██║   ██║  
 ███████║ ██║███████╗███████╗██║ ╚████║   ██║  
 ╚══════╝ ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝  `
-        ];
+    ];
 
-        const glitchFrames = [
-`▓▓▓▓▓▓▓░ ▓▓░▓▓░     ▓▓▓▓▓▓▓░▓▓▓░   ▓▓░▓▓▓▓▓▓▓▓░
-▓▓░░░░░░░▓▓▓░▓▓░     ▓▓░░░░░░▓▓▓▓░  ▓▓░░░░▓▓░░░░
-▓▓▓▓▓▓▓░░░▓▓░▓▓░     ▓▓▓▓▓░  ▓▓░▓▓░ ▓▓░   ▓▓░  
-░░░░░▓▓░ ▓▓░▓▓░     ▓▓░░░░  ▓▓░░▓▓░▓▓░   ▓▓░  
-▓▓▓▓▓▓▓░ ▓▓░▓▓▓▓▓▓▓░▓▓▓▓▓▓▓░▓▓░ ░▓▓▓▓░   ▓▓░  
-░░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░░  ░░░░░   ░░░  `,
-`█████████████████████████████████████████████████
-██S█1█L█E█N█T████████████████████████████████████
-█████████████████████████████████████████████████
-███░░░░███░░░░███░░░░███░░░░███░░░░███░░░░░░░░░░
-███████████████████████████████████████████████░░
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░`
-        ];
+    let f = 0;
+    const logo = document.getElementById('logo');
 
-        let currentFrame = 0;
-        let glitchMode = false;
-        const logoElement = document.getElementById('logo');
+    setInterval(() => {
+        logo.textContent = frames[f];
+        f = (f + 1) % frames.length;
+    }, 200);
+</script>
 
-        function animateLogo() {
-            if (Math.random() > 0.95) {
-                glitchMode = true;
-                logoElement.textContent = glitchFrames[Math.floor(Math.random() * glitchFrames.length)];
-                setTimeout(() => { glitchMode = false; }, 100);
-            } else if (!glitchMode) {
-                logoElement.textContent = logoFrames[currentFrame];
-                currentFrame = (currentFrame + 1) % logoFrames.length;
-            }
-        }
-        setInterval(animateLogo, 200);
-
-        // Matrix Rain Background
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-
-        const chars = '01ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
-        const fontSize = 14;
-        let columns = Math.floor(window.innerWidth / fontSize);
-        let drops = Array(columns).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#0F0';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const char = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 35);
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            columns = Math.floor(window.innerWidth / fontSize);
-            drops = Array(columns).fill(1);
-        });
-
-        // Random Glitch Overlay
-        const glitchOverlay = document.getElementById('glitchOverlay');
-        function createGlitch() {
-            if (Math.random() > 0.97) {
-                glitchOverlay.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.1)`;
-                setTimeout(() => {
-                    glitchOverlay.style.background = 'transparent';
-                }, 50);
-            }
-        }
-        setInterval(createGlitch, 100);
-
-        // Glitch "WAS HERE" text
-        const wasHereElement = document.getElementById('wasHere');
-        setInterval(() => {
-            if (Math.random() > 0.9) {
-                wasHereElement.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
-                setTimeout(() => {
-                    wasHereElement.style.transform = 'translate(0, 0)';
-                }, 50);
-            }
-        }, 100);
-
-        // Wallet Copy Functionality
-        const walletAddress = document.getElementById('walletAddress');
-        walletAddress.addEventListener('click', () => {
-            const address = 'EMTppBwvfX8b9w3jh9o21qW9JidmXRJ53yFs2y6q78PB';
-            navigator.clipboard.writeText(address).then(() => {
-                const originalText = walletAddress.textContent;
-                walletAddress.textContent = '✓ COPIED TO CLIPBOARD!';
-                walletAddress.style.color = '#ff0000';
-                setTimeout(() => {
-                    walletAddress.textContent = originalText;
-                    walletAddress.style.color = '#00ff00';
-                }, 2000);
-            });
-        });
-
-        // Random screen shake
-        setInterval(() => {
-            if (Math.random() > 0.98) {
-                document.body.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
-                setTimeout(() => {
-                    document.body.style.transform = 'translate(0, 0)';
-                }, 50);
-            }
-        }, 100);
-    </script>
 </body>
 </html>
