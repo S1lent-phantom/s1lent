@@ -1,237 +1,461 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>S1LENT WAS HERE – ASCII</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S1LENT // WAS HERE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-```
-body {
-  background: radial-gradient(circle at top, #222 0%, #000 60%, #000 100%);
-  color: #00ff6a;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Courier New", monospace;
-  overflow: hidden;
-}
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
 
-.crt {
-  position: relative;
-  padding: 3vw 4vw;
-  border: 0.3vw solid #00ff6a55;
-  box-shadow:
-    0 0 4vw #00ff6a33,
-    0 0 1vw #00ff6a;
-  background: #020303;
-  max-width: 90vw;
-  max-height: 90vh;
-  overflow: hidden;
-}
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
 
-.crt::before {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.1) 0px,
-    rgba(0, 0, 0, 0.1) 2px,
-    rgba(0, 0, 0, 0.3) 3px
-  );
-  mix-blend-mode: soft-light;
-  opacity: 0.4;
-}
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
 
-.crt::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top, #00ff6a11, transparent 60%);
-  pointer-events: none;
-}
+        .ascii-logo {
+            font-size: 3.5vw;
+            font-weight: bold;
+            line-height: 1.2;
+            white-space: pre;
+            text-shadow:
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000;
+            animation: flicker 0.15s infinite;
+        }
 
-#ascii {
-  position: relative;
-  z-index: 1;
-  white-space: pre;
-  font-size: clamp(12px, 2.5vw, 48px);
-  line-height: 1.2;
-  text-shadow:
-    0 0 0.5vw #00ff6a,
-    0 0 1vw #00ff6a;
-  animation: flicker 1.5s infinite alternate;
-  transform: scale(1.1);
-}
+        .was-here {
+            font-size: 6vw;
+            font-weight: bold;
+            margin-top: 30px;
+            background: linear-gradient(45deg, #ff0000, #ffffff, #ff0000);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 2s ease infinite, glitchText 0.3s infinite;
+            text-shadow:
+                3px 3px 0 rgba(255, 0, 0, 0.5),
+                -3px -3px 0 rgba(255, 255, 255, 0.5);
+        }
 
-.status {
-  position: absolute;
-  bottom: 0.5vw;
-  right: 1vw;
-  font-size: clamp(6px, 1vw, 14px);
-  color: #00ff6a88;
-  z-index: 2;
-}
+        .support-section {
+            margin-top: 60px;
+            padding: 30px;
+            border: 3px solid #ff0000;
+            background: rgba(255, 0, 0, 0.05);
+            animation: borderGlitch 0.5s infinite;
+        }
 
-@keyframes flicker {
-  0% { opacity: 0.9; }
-  5% { opacity: 0.7; }
-  10% { opacity: 0.95; }
-  20% { opacity: 0.8; }
-  30% { opacity: 1; }
-  40% { opacity: 0.75; }
-  50% { opacity: 0.9; }
-  60% { opacity: 1; }
-  70% { opacity: 0.85; }
-  80% { opacity: 1; }
-  90% { opacity: 0.9; }
-  100% { opacity: 1; }
-}
+        .support-title {
+            font-size: 3vw;
+            color: #ff0000;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: flicker 0.2s infinite;
+        }
 
-@media (max-width: 768px) {
-  #ascii {
-    font-size: clamp(8px, 2.5vw, 16px);
-  }
-}
+        .wallet-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border: 2px solid #fff;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
 
-@media (min-width: 1920px) {
-  #ascii {
-    font-size: clamp(24px, 2.8vw, 56px);
-    transform: scale(1.2);
-  }
-  .crt {
-    padding: 4vw 5vw;
-  }
-}
+        .wallet-address {
+            font-size: 1.8vw;
+            color: #00ff00;
+            word-break: break-all;
+            text-shadow: 0 0 5px #00ff00;
+            animation: textGlow 1s ease-in-out infinite;
+            cursor: pointer;
+        }
 
-@media (min-width: 3840px) {
-  #ascii {
-    font-size: clamp(40px, 3vw, 72px);
-    transform: scale(1.3);
-  }
-}
-```
+        .copy-hint {
+            font-size: 1.5vw;
+            color: #888;
+            margin-top: 15px;
+            animation: pulse 2s infinite;
+        }
 
-  </style>
+        .qr-code {
+            margin: 25px auto;
+            padding: 20px;
+            background: #fff;
+            display: inline-block;
+            border: 4px solid #ff0000;
+            animation: qrPulse 2s infinite;
+        }
+
+        .qr-code img {
+            display: block;
+            width: 200px;
+            height: auto;
+        }
+
+        .ethics-section {
+            margin-top: 50px;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            background: rgba(0, 255, 0, 0.03);
+            animation: borderGlitchGreen 0.5s infinite;
+        }
+
+        .ethics-title {
+            font-size: 1.8vw;
+            color: #00ff00;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00ff00;
+            animation: flicker 0.3s infinite;
+        }
+
+        .ethics-text {
+            font-size: 1.2vw;
+            color: #fff;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .ethics-text .highlight {
+            color: #00ff00;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .ethics-text .warning {
+            color: #ff0000;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1;
+            animation: scanlineMove 10s linear infinite;
+        }
+
+        .vhs-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 0, 0, 0.03),
+                    rgba(0, 255, 0, 0.02),
+                    rgba(0, 0, 255, 0.03)
+                );
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.1;
+            animation: vhsDistort 0.3s infinite;
+        }
+
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            25% { opacity: 0.8; }
+            50% { opacity: 1; }
+            75% { opacity: 0.9; }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes glitchText {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes borderGlitch {
+            0%, 100% { border-color: #ff0000; }
+            25% { border-color: #fff; }
+            50% { border-color: #ff0000; }
+            75% { border-color: rgba(255, 0, 0, 0.5); }
+        }
+
+        @keyframes borderGlitchGreen {
+            0%, 100% { border-color: #00ff00; }
+            25% { border-color: #fff; }
+            50% { border-color: #00ff00; }
+            75% { border-color: rgba(0, 255, 0, 0.5); }
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
+            50% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes scanlineMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        @keyframes vhsDistort {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(2px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes qrPulse {
+            0%, 100% { box-shadow: 0 0 10px #ff0000; }
+            50% { box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
+        }
+
+        @media (max-width: 768px) {
+            .ascii-logo { font-size: 4vw; }
+            .was-here { font-size: 8vw; }
+            .support-title { font-size: 4vw; }
+            .wallet-address { font-size: 2.5vw; }
+            .copy-hint { font-size: 2.5vw; }
+            .ethics-title { font-size: 3vw; }
+            .ethics-text { font-size: 2vw; }
+            .qr-code { padding: 10px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="crt">
-    <pre id="ascii"></pre>
-    <div class="status">[ RUNNING ASCII DEMO // S1LENT WAS HERE ]</div>
-  </div>
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vhs-overlay"></div>
+    <div class="glitch-overlay" id="glitchOverlay"></div>
 
-  <script>
-    const asciiArt = `
-   ███████╗ ██╗    ██╗     ███████╗███╗   ██╗████████╗
-   ██╔════╝███║    ██║     ██╔════╝████╗  ██║╚══██╔══╝
-   ███████╗╚██║    ██║     █████╗  ██╔██╗ ██║   ██║   
-   ╚════██║ ██║    ██║     ██╔══╝  ██║╚██╗██║   ██║   
-   ███████║ ██║    ███████╗███████╗██║ ╚████║   ██║   
-   ╚══════╝ ╚═╝    ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   
-                                                        
-           ║║║  W A S   H E R E  ║║║                  
-    `;
+    <div class="container">
+        <div class="glitch-wrapper">
+            <pre class="ascii-logo" id="logo"></pre>
+        </div>
 
-    const pacmanFramesRight = [
-      "ᗧ · · · · · · · · · ",
-      "· ᗧ· · · · · · · · ",
-      "· · ᗤ· · · · · · · ",
-      "· · · ᗧ· · · · · · ",
-      "· · · · ᗤ· · · · · ",
-      "· · · · · ᗧ· · · · ",
-      "· · · · · · ᗤ· · · ",
-      "· · · · · · · ᗧ· · ",
-      "· · · · · · · · ᗤ· ",
-      "· · · · · · · · · ᗧ"
-    ];
+        <div class="was-here" id="wasHere">WAS HERE</div>
 
-    const pacmanFramesLeft = [
-      "· · · · · · · · · ᗣ",
-      "· · · · · · · · ᗣ ·",
-      "· · · · · · · ᗤ· · ",
-      "· · · · · · ᗣ · · ·",
-      "· · · · · ᗤ· · · · ",
-      "· · · · ᗣ · · · · ·",
-      "· · · ᗤ· · · · · · ",
-      "· · ᗣ · · · · · · ·",
-      "· ᗤ· · · · · · · · ",
-      "ᗣ · · · · · · · · ·"
-    ];
+        <div class="support-section">
+            <div class="support-title">► SUPPORT GREY HEADS ◄</div>
+            <div class="wallet-container">
+                <div class="wallet-address" id="walletAddress">
+                    EMTppBwvfX8b9w3jh9o21qW9JidmXRJ53yFs2y6q78PB
+                </div>
+                <div class="copy-hint">[CLICK TO COPY WALLET ADDRESS]</div>
+            </div>
+            <div class="qr-code">
+                <img src="qr.png" alt="QR Code">
+            </div>
+        </div>
 
-    const asciiEl = document.getElementById("ascii");
-    let glitchCounter = 0;
-    let animCounter = 0;
-    let goingRight = true;
+        <div class="ethics-section">
+            <div class="ethics-title">► ETHICAL DISCLOSURE ◄</div>
+            <div class="ethics-text">
+                <span class="highlight">I DO NO HARM</span> •
+                I ONLY FIND <span class="highlight">VULNERABILITIES</span> •
+                <span class="warning">NO MALWARE • NO RANSOMWARE</span> •
+                <span class="highlight">PROTECT YOURSELF</span>
+                <br><span style="color: #666; font-size: 0.9em;">[ WHITE HAT • RESPONSIBLE DISCLOSURE • SECURITY RESEARCH ]</span>
+            </div>
+        </div>
+    </div>
 
-    function frame() {
-      glitchCounter++;
-      animCounter++;
-      
-      let pacFrame;
-      let frameIndex = Math.floor(animCounter / 3) % 10;
-      
-      if (goingRight) {
-        pacFrame = pacmanFramesRight[frameIndex];
-        if (frameIndex === 9) {
-          goingRight = false;
-          animCounter = 0;
+    <script>
+        // ASCII Logo Frames
+        const logoFrames = [
+`███████╗ ██╗██╗     ███████╗███╗   ██╗████████╗
+██╔════╝███║██║     ██╔════╝████╗  ██║╚══██╔══╝
+███████╗╚██║██║     █████╗  ██╔██╗ ██║   ██║  
+╚════██║ ██║██║     ██╔══╝  ██║╚██╗██║   ██║  
+███████║ ██║███████╗███████╗██║ ╚████║   ██║  
+╚══════╝ ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝  `,
+`███████╗ ██╗██╗     ███████╗███╗   ██╗████████╗
+██╔════╝███║██║     ██╔════╝████╗  ██║╚══██╔══╝
+███████╗╚██║██║     █████╗  ██╔██╗ ██║   ██║  
+╚════██║ ██║██║     ██╔══╝  ██║╚██╗██║   ██║  
+███████║ ██║███████╗███████╗██║ ╚████║   ██║  
+╚══════╝ ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝  `
+        ];
+
+        const glitchFrames = [
+`▓▓▓▓▓▓▓░ ▓▓░▓▓░     ▓▓▓▓▓▓▓░▓▓▓░   ▓▓░▓▓▓▓▓▓▓▓░
+▓▓░░░░░░░▓▓▓░▓▓░     ▓▓░░░░░░▓▓▓▓░  ▓▓░░░░▓▓░░░░
+▓▓▓▓▓▓▓░░░▓▓░▓▓░     ▓▓▓▓▓░  ▓▓░▓▓░ ▓▓░   ▓▓░  
+░░░░░▓▓░ ▓▓░▓▓░     ▓▓░░░░  ▓▓░░▓▓░▓▓░   ▓▓░  
+▓▓▓▓▓▓▓░ ▓▓░▓▓▓▓▓▓▓░▓▓▓▓▓▓▓░▓▓░ ░▓▓▓▓░   ▓▓░  
+░░░░░░░░ ░░░░░░░░░░░░░░░░░░░░░░  ░░░░░   ░░░  `,
+`█████████████████████████████████████████████████
+██S█1█L█E█N█T████████████████████████████████████
+█████████████████████████████████████████████████
+███░░░░███░░░░███░░░░███░░░░███░░░░███░░░░░░░░░░
+███████████████████████████████████████████████░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░`
+        ];
+
+        let currentFrame = 0;
+        let glitchMode = false;
+        const logoElement = document.getElementById('logo');
+
+        function animateLogo() {
+            if (Math.random() > 0.95) {
+                glitchMode = true;
+                logoElement.textContent = glitchFrames[Math.floor(Math.random() * glitchFrames.length)];
+                setTimeout(() => { glitchMode = false; }, 100);
+            } else if (!glitchMode) {
+                logoElement.textContent = logoFrames[currentFrame];
+                currentFrame = (currentFrame + 1) % logoFrames.length;
+            }
         }
-      } else {
-        pacFrame = pacmanFramesLeft[frameIndex];
-        if (frameIndex === 9) {
-          goingRight = true;
-          animCounter = 0;
+        setInterval(animateLogo, 200);
+
+        // Matrix Rain Background
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-      }
-      
-      let output = asciiArt;
-      
-      // Pac-Man hinzufügen
-      output += "\n\n         " + pacFrame;
-      output += "\n            (i did nothing bad fyi)";
-      
-      // Alle paar Frames ein "Glitch"-Effekt
-      if (glitchCounter % 30 === 0) {
-        const lines = output.split("\n");
-        const glitched = lines.map((line, idx) => {
-          // Letzte 2 Zeilen (Pac-Man) nicht glitchen
-          if (idx >= lines.length - 3) return line;
-          
-          if (Math.random() < 0.3) {
-            // Zufällig Zeichen ersetzen
-            return line.split("").map(c => {
-              if (c !== " " && Math.random() < 0.1) {
-                return ["█","▓","▒","░","#","@"][Math.floor(Math.random() * 6)];
-              }
-              return c;
-            }).join("");
-          }
-          return line;
-        }).join("\n");
-        
-        asciiEl.textContent = glitched;
-        
-        // Nach kurzer Zeit zurück zum Original
-        setTimeout(() => {
-          asciiEl.textContent = output;
+        resizeCanvas();
+
+        const chars = '01ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
+        const fontSize = 14;
+        let columns = Math.floor(window.innerWidth / fontSize);
+        let drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 35);
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            columns = Math.floor(window.innerWidth / fontSize);
+            drops = Array(columns).fill(1);
+        });
+
+        // Random Glitch Overlay
+        const glitchOverlay = document.getElementById('glitchOverlay');
+        function createGlitch() {
+            if (Math.random() > 0.97) {
+                glitchOverlay.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.1)`;
+                setTimeout(() => {
+                    glitchOverlay.style.background = 'transparent';
+                }, 50);
+            }
+        }
+        setInterval(createGlitch, 100);
+
+        // Glitch "WAS HERE" text
+        const wasHereElement = document.getElementById('wasHere');
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                wasHereElement.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
+                setTimeout(() => {
+                    wasHereElement.style.transform = 'translate(0, 0)';
+                }, 50);
+            }
         }, 100);
-      } else {
-        asciiEl.textContent = output;
-      }
-    }
 
-    // alle 50ms ein neues Frame → Animation
-    setInterval(frame, 50);
-  </script>
+        // Wallet Copy Functionality
+        const walletAddress = document.getElementById('walletAddress');
+        walletAddress.addEventListener('click', () => {
+            const address = 'EMTppBwvfX8b9w3jh9o21qW9JidmXRJ53yFs2y6q78PB';
+            navigator.clipboard.writeText(address).then(() => {
+                const originalText = walletAddress.textContent;
+                walletAddress.textContent = '✓ COPIED TO CLIPBOARD!';
+                walletAddress.style.color = '#ff0000';
+                setTimeout(() => {
+                    walletAddress.textContent = originalText;
+                    walletAddress.style.color = '#00ff00';
+                }, 2000);
+            });
+        });
 
+        // Random screen shake
+        setInterval(() => {
+            if (Math.random() > 0.98) {
+                document.body.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
+                setTimeout(() => {
+                    document.body.style.transform = 'translate(0, 0)';
+                }, 50);
+            }
+        }, 100);
+    </script>
 </body>
 </html>
