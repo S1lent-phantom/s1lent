@@ -72,56 +72,68 @@
                 -3px -3px 0 rgba(255, 255, 255, 0.5);
         }
 
+        /* Two Column Layout */
+        .two-column-section {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+        }
+
         .support-section {
-            margin-top: 30px;
-            padding: 20px;
+            padding: 15px;
             border: 3px solid #ff0000;
             background: rgba(255, 0, 0, 0.05);
             animation: borderGlitch 0.5s infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .support-title {
-            font-size: clamp(16px, 2.5vw, 28px);
+            font-size: clamp(14px, 2vw, 24px);
             color: #ff0000;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-transform: uppercase;
             animation: flicker 0.2s infinite;
         }
 
         .wallet-label {
-            font-size: clamp(14px, 2vw, 24px);
+            font-size: clamp(11px, 1.5vw, 18px);
             font-weight: bold;
             color: #00ff00;
-            margin-top: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-shadow: 0 0 10px #00ff00;
         }
 
         .qr-code {
-            margin: 20px auto;
-            padding: 15px;
+            margin: 10px auto;
+            padding: 10px;
             background: #fff;
             display: inline-block;
-            border: 4px solid #ff0000;
+            border: 3px solid #ff0000;
             animation: qrPulse 2s infinite;
         }
 
         .qr-code img {
             display: block;
-            width: clamp(120px, 20vw, 220px);
+            width: clamp(100px, 15vw, 180px);
             height: auto;
         }
 
         .ethics-section {
-            margin-top: 30px;
-            padding: 12px 15px;
+            padding: 15px;
             border: 2px solid #00ff00;
             background: rgba(0, 255, 0, 0.03);
             animation: borderGlitchGreen 0.5s infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .ethics-title {
-            font-size: clamp(12px, 1.5vw, 20px);
+            font-size: clamp(14px, 2vw, 24px);
             color: #00ff00;
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -130,10 +142,10 @@
         }
 
         .ethics-text {
-            font-size: clamp(9px, 1vw, 14px);
+            font-size: clamp(9px, 1.1vw, 14px);
             color: #fff;
-            line-height: 1.4;
-            text-align: center;
+            line-height: 1.5;
+            text-align: left;
         }
 
         .ethics-text .highlight {
@@ -146,6 +158,14 @@
             color: #ff0000;
             font-weight: bold;
             text-shadow: 0 0 5px #ff0000;
+        }
+
+        .ethics-text .subtitle {
+            color: #666;
+            font-size: 0.85em;
+            display: block;
+            margin-top: 8px;
+            text-align: center;
         }
 
         .matrix-bg {
@@ -263,7 +283,7 @@
                 font-size: clamp(16px, 2.2vw, 32px);
             }
             .ethics-text {
-                font-size: clamp(10px, 0.9vw, 16px);
+                font-size: clamp(10px, 1vw, 16px);
             }
         }
 
@@ -271,15 +291,19 @@
             .tv-safe {
                 padding: 3vh 4vw;
             }
-            .ethics-section {
-                margin-top: 25px;
-                padding: 10px 12px;
+            .two-column-section {
+                gap: 15px;
+                margin-top: 20px;
             }
         }
 
         @media (max-width: 768px) {
             .tv-safe {
                 padding: 2vh 3vw;
+            }
+            .two-column-section {
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
         }
     </style>
@@ -298,25 +322,29 @@
 
             <div class="was-here" id="wasHere">WAS HERE</div>
 
-            <div class="support-section">
-                <div class="support-title">► SUPPORT GREY HEADS ◄</div>
-                <div class="wallet-label">OUR SOLANA WALLET:</div>
-                <div class="qr-code">
-                    <img src="qr.png" alt="QR Code">
+            <div class="two-column-section">
+                <!-- Left Column: Support Section -->
+                <div class="support-section">
+                    <div class="support-title">► SUPPORT GREY HEADS ◄</div>
+                    <div class="wallet-label">OUR SOLANA WALLET:</div>
+                    <div class="qr-code">
+                        <img src="qr.png" alt="QR Code">
+                    </div>
                 </div>
-            </div>
 
-            <div class="ethics-section">
-                <div class="ethics-title">► ETHICAL DISCLOSURE ◄</div>
-                <div class="ethics-text">
-                    <span class="highlight">I DO NO HARM</span> •
-                    I ONLY FIND <span class="highlight">VULNERABILITIES</span> •
-                    <span class="warning">NO MALWARE • NO RANSOMWARE</span> •
-                    <span class="highlight">PROTECT YOURSELF</span>
-                    <br>
-                    <span style="color: #666; font-size: 0.85em;">
-                        [ WHITE HAT • RESPONSIBLE DISCLOSURE • SECURITY RESEARCH ]
-                    </span>
+                <!-- Right Column: Ethics Section -->
+                <div class="ethics-section">
+                    <div class="ethics-title">► ETHICAL DISCLOSURE ◄</div>
+                    <div class="ethics-text">
+                        <span class="highlight">• I DO NO HARM</span><br>
+                        <span class="highlight">• FIND VULNERABILITIES</span><br>
+                        <span class="warning">• NO MALWARE</span><br>
+                        <span class="warning">• NO RANSOMWARE</span><br>
+                        <span class="highlight">• PROTECT YOURSELF</span>
+                        <span class="subtitle">
+                            [ WHITE HAT • RESPONSIBLE<br>DISCLOSURE • SECURITY RESEARCH ]
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
